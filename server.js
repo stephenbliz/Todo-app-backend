@@ -9,7 +9,6 @@ const app = express();
 
 // connection to database
 
-// const dbURL = 'mongodb+srv://uzomaebuka11:CpJWw3G1UcntCpNJ@todo.0xygd5u.mongodb.net/?retryWrites=true&w=majority&appName=Todo';
 const dbURL = process.env.MONGOOSE_CONNECT_URL;
 const port = process.env.PORT;
 
