@@ -25,7 +25,7 @@ mongoose.connect(dbURL)
 // middlewares
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.CORS_ACCESS,
     credentials: true
 }));
 

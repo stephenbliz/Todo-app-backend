@@ -1,4 +1,6 @@
 const express = require('express');
+const cloudinary = require('../cloudinaryConfig');
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
 const {
     getAllTodo,
     getSingleTodo,
@@ -9,11 +11,21 @@ const {
 } = require('../controlers/todoControler')
 const multer = require('multer');
 
-const storage = multer.diskStorage({
-  destination: 'uploads/',
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  },
+// const storage = multer.diskStorage({
+//   destination: 'uploads/',
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + '-' + file.originalname);
+//   },
+// });
+
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'todo_images',
+    allowed_format: ['jpg', 'png', 'jpeg'],
+    transformation: [{width: '500', height: '500', crop: 'limit'}]
+  }
 });
 
 const upload = multer({storage});

@@ -61,7 +61,7 @@ const postTodo = async (req, res) => {
         const todo = await Todo.create({
             title,
             description,
-            image: req.file ? req.file.filename : null,
+            image: req.file ? req.file.path : null,
             priority,
             status
         });
@@ -83,7 +83,7 @@ const updateATodo = async (req, res) => {
         return res.status(404).json({error: 'Could not find such todo in mongoose'})
     }
 
-    const todo = await Todo.findByIdAndUpdate(id, {...req.body, image: req.file ? req.file.filename : null,});
+    const todo = await Todo.findByIdAndUpdate(id, {...req.body, image: req.file ? req.file.path : null,});
 
     if(!todo){
         return res.status(404).json({error: 'Could not find such todo...'})
