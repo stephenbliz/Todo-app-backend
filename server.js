@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
 const todoRouter = require('./routes/todoRoutes');
+const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
@@ -41,3 +42,5 @@ app.use((req, res, next) =>{
 // Routes
 
 app.use('/api/todo', todoRouter);
+app.use('/api/user', userRouter);
+

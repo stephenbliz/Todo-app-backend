@@ -49,9 +49,7 @@ const deleteATodo = async (req, res) => {
 // Post a todo
 
 const postTodo = async (req, res) => {
-    const {title, description, priority, status} = req.body;
-    console.log('BODY:', req.body);      // <== Should NOT be undefined
-  console.log('FILE:', req.file);  
+    const {title, description, priority, status} = req.body;  
 
     if (!title || !priority || !status || !description) {
       return res.status(400).json({ message: 'Missing required fields' });

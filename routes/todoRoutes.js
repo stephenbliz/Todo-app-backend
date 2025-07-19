@@ -8,16 +8,9 @@ const {
     postTodo,
     updateATodo
 
-} = require('../controlers/todoControler')
+} = require('../controlers/todoControler');
+
 const multer = require('multer');
-
-// const storage = multer.diskStorage({
-//   destination: 'uploads/',
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + '-' + file.originalname);
-//   },
-// });
-
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
