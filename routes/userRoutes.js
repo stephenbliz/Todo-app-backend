@@ -11,21 +11,21 @@ const {
 const router = express.Router();
 
 // SignUp a user
-router.post('/', signUp);
+router.post('/register', signUp);
 
 // Get all user
-router.get('/', getAllUser);
+router.get('/user', getAllUser);
 
 // Delete a user
-router.delete('/:id', deleteUser);
+router.delete('/user/:id', deleteUser);
 
 // Update a user
-router.put('/:id', updateUser);
+router.put('/user/:id', updateUser);
 
 // Make a user admin
-router.put('/:id', makeAdmin);
+router.put('/user/:id', makeAdmin);
 
 // SignIn a user
-router.get('/', signIn);
+router.post('/login', signIn);
 
 module.exports = router;

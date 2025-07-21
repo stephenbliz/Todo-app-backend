@@ -42,5 +42,5 @@ app.use((req, res, next) =>{
 // Routes
 
 app.use('/api/todo', todoRouter);
-app.use('/api/user', userRouter);
+app.use('/api', userRouter);
 

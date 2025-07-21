@@ -1,5 +1,7 @@
 const User = require('../model/userModel');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 // Add a user/SignUp
 const signUp = async(req, res) => {
@@ -18,7 +20,7 @@ const signUp = async(req, res) => {
     const user = await User.create({
         firstName,
         surname,
-        middleName: middleName? middleName : '',
+        middleName: middleName? middleName : null,
         password,
         phone,
         image,
@@ -30,7 +32,7 @@ const signUp = async(req, res) => {
         return res.status(404).json({error: 'Could not add user'});
     }
 
-    res.status(200).json(user);
+    res.status(200).json({message: "User signup sucessful"});
 }
 
 // Get all users
@@ -107,10 +109,23 @@ const signIn = async (req, res) => {
         return res.status(404).json({error: 'Invalid email or password'});
     }
 
+    const token = jwt.sign({id: user._id, email: user.email}, process.env.JWT_SECRET, {expiresIn: '1h'})
+
     if(user.password !== password){
         res.status(404).json({error: 'Invalid email or password'});
     }else{
-        res.status(200).json(user);
+        res.status(200).json({
+            token,
+            user: {
+                email: user.email,
+                image: user.image? user.image : null,
+                id: user._id,
+                tag: user.tag,
+                firstName: user.firstName,
+                middleName: user.middleName? user.middleName : null,
+                surname: user.surname
+            }
+        });
     }
 
 }
