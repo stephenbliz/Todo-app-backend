@@ -17,6 +17,12 @@ const signUp = async(req, res) => {
 
     const image = req.file? req.file.path : null;
 
+    const userExist = await User.findOne({email});
+
+    if(userExist){
+        return res.status(401).json({message: 'User already exist, login to continue.'})
+    }
+
     const user = await User.create({
         firstName,
         surname,
@@ -32,7 +38,7 @@ const signUp = async(req, res) => {
         return res.status(404).json({error: 'Could not add user'});
     }
 
-    res.status(200).json({message: "User signup sucessful"});
+    res.status(200).json({message: "Signup successful"});
 }
 
 // Get all users

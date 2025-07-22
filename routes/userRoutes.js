@@ -1,4 +1,7 @@
 const express = require('express');
+const multer = require('multer');
+const cloudinary = require('../cloudinaryConfig');
+const {CloudinaryStorage} = require('multer-storage-cloudinary')
 const {
     signUp,
     getAllUser,
@@ -10,8 +13,20 @@ const {
 
 const router = express.Router();
 
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: 'user_images',
+        allowed_format: ['jpg', 'png', 'jpeg'],
+        transformation: [{height: '500', width: '500', crop: 'limit'}]
+    }
+
+});
+
+const upload = multer({storage});
+
 // SignUp a user
-router.post('/register', signUp);
+router.post('/register', upload.single('image'), signUp);
 
 // Get all user
 router.get('/user', getAllUser);
