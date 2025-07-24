@@ -22,6 +22,10 @@ const todoSchema = new Schema({
     status: {
         type: String,
         require: true
+    },
+    userId: {
+        type: String,
+        require: true
     }
 }, {timestamps: true})
 

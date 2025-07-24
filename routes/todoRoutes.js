@@ -11,6 +11,7 @@ const {
 } = require('../controlers/todoControler');
 
 const multer = require('multer');
+const jwtValidation = require('../middlewares/jwtValidation');
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
@@ -26,19 +27,19 @@ const upload = multer({storage});
 const router = express.Router();
 
 // get all todo
-router.get('/', getAllTodo);
+router.get('/', jwtValidation, getAllTodo);
 
 // get a single todo
-router.get('/:id', getSingleTodo);
+router.get('/:id', jwtValidation, getSingleTodo);
 
 // delete a todo
-router.delete('/:id', deleteATodo);
+router.delete('/:id', jwtValidation, deleteATodo);
 
 // posting a todo item
-router.post('/', upload.single('image'), postTodo);
+router.post('/', jwtValidation, upload.single('image'), postTodo);
 
 //updating a todo item
 
-router.put('/:id', upload.single('image'), updateATodo);
+router.put('/:id', jwtValidation, upload.single('image'), updateATodo);
 
 module.exports = router;

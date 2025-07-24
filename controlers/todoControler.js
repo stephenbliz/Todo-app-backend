@@ -6,7 +6,12 @@ const mongoose = require('mongoose');
 // Get all todo
 
 const getAllTodo = async (req, res) => {
-    const todo = await Todo.find({}).sort({createdAt: -1});
+    const userId = req.user.id;
+
+    if(!userId){
+        return res.status(401).json({error: 'Not authorized user'});
+    }
+    const todo = await Todo.find({userId}).sort({createdAt: -1});
     res.status(200).json(todo);
 }
 
@@ -50,6 +55,10 @@ const deleteATodo = async (req, res) => {
 
 const postTodo = async (req, res) => {
     const {title, description, priority, status} = req.body;  
+    const userId = req.user.id;
+    if(!userId){
+       return res.status(401).json({error: 'Not authorized user'});
+    }
 
     if (!title || !priority || !status || !description) {
       return res.status(400).json({ message: 'Missing required fields' });
@@ -61,7 +70,8 @@ const postTodo = async (req, res) => {
             description,
             image: req.file ? req.file.path : null,
             priority,
-            status
+            status,
+            userId
         });
         if(todo) {
             res.status(200).json(todo);
