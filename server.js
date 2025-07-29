@@ -11,7 +11,7 @@ const app = express();
 // connection to database
 
 const dbURL = process.env.MONGOOSE_CONNECT_URL;
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 
 mongoose.connect(dbURL)
     .then((result) =>{
