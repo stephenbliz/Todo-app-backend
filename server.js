@@ -12,6 +12,7 @@ const app = express();
 
 const dbURL = process.env.MONGOOSE_CONNECT_URL;
 const port = process.env.PORT || 4000;
+console.log('db:', process.env.MONGOOSE_CONNECT_URL);
 
 mongoose.connect(dbURL)
     .then((result) =>{
@@ -20,7 +21,7 @@ mongoose.connect(dbURL)
         });
     })
     .catch((err)=>{
-        console.log(err);
+        console.error('Mongodb connection failed:', err.message);
     })
 
 // middlewares
@@ -43,4 +44,7 @@ app.use((req, res, next) =>{
 
 app.use('/api/todo', todoRouter);
 app.use('/api', userRouter);
+app.get('/', (req, res) =>{
+    res.send('server working fine');
+})
 
